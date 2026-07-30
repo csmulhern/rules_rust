@@ -235,23 +235,20 @@ perform it's default behavior.</p>
 --@rules_rust//rust/settings:error_format
 </pre>
 <p>This setting may be changed from the command line to generate machine readable errors.</p>
+<p><a id="experimental_compile_rustdoc_tests"></a></p>
+<h2 id="experimental_compile_rustdoc_tests"><a class="header" href="#experimental_compile_rustdoc_tests">experimental_compile_rustdoc_tests</a></h2>
+<pre>
+--@rules_rust//rust/settings:experimental_compile_rustdoc_tests
+</pre>
+<p>A flag to control whether <code>rust_doc_test</code> compiles doc tests during the build phase.</p>
+<p>When enabled and the toolchain channel is "nightly", <code>rust_doc_test</code> will compile     doc test binaries using <code>rustdoc --test --no-run</code> during <code>bazel build</code> and only     execute them during <code>bazel test</code>. This requires a nightly Rust toolchain because     <code>--no-run</code> depends on <code>-Zunstable-options</code>.</p>
+<p>When enabled with a non-nightly toolchain, the existing behavior is silently used.</p>
 <p><a id="experimental_link_std_dylib"></a></p>
 <h2 id="experimental_link_std_dylib"><a class="header" href="#experimental_link_std_dylib">experimental_link_std_dylib</a></h2>
 <pre>
 --@rules_rust//rust/settings:experimental_link_std_dylib
 </pre>
 <p>A flag to control whether to link libstd dynamically.</p>
-<p><a id="experimental_per_crate_rustc_flag"></a></p>
-<h2 id="experimental_per_crate_rustc_flag"><a class="header" href="#experimental_per_crate_rustc_flag">experimental_per_crate_rustc_flag</a></h2>
-<pre>
---@rules_rust//rust/settings:experimental_per_crate_rustc_flag
-</pre>
-<p>Add additional rustc_flag to matching crates from the command line with <code>--@rules_rust//rust/settings:experimental_per_crate_rustc_flag</code>.</p>
-<p>The expected flag format is prefix_filter@flag, where any crate with a label or execution path starting
-with the prefix filter will be built with the given flag. The label matching uses the canonical form of
-the label (i.e <code>//package:label_name</code>). The execution path is the relative path to your workspace directory
-including the base name (including extension) of the crate root. This flag is not applied to the exec
-configuration (proc-macros, cargo_build_script, etc). Multiple uses are accumulated.</p>
 <p><a id="experimental_use_allocator_libraries_with_mangled_symbols"></a></p>
 <h2 id="experimental_use_allocator_libraries_with_mangled_symbols"><a class="header" href="#experimental_use_allocator_libraries_with_mangled_symbols">experimental_use_allocator_libraries_with_mangled_symbols</a></h2>
 <pre>
@@ -398,6 +395,17 @@ format its diagnostics; otherwise, it uses the format set in <code>error_format<
 <p>This setting may be used to enable builds without the standard library.</p>
 <p>Currently only no_std + alloc is supported, which can be enabled with setting the value to "alloc".
 In the future we could add support for additional modes, e.g "core", "alloc,collections".</p>
+<p><a id="per_crate_rustc_flag"></a></p>
+<h2 id="per_crate_rustc_flag"><a class="header" href="#per_crate_rustc_flag">per_crate_rustc_flag</a></h2>
+<pre>
+--@rules_rust//rust/settings:per_crate_rustc_flag
+</pre>
+<p>Add additional rustc_flag to matching crates from the command line with <code>--@rules_rust//rust/settings:per_crate_rustc_flag</code>.</p>
+<p>The expected flag format is prefix_filter@flag, where any crate with a label or execution path starting
+with the prefix filter will be built with the given flag. The label matching uses the canonical form of
+the label (i.e <code>//package:label_name</code>). The execution path is the relative path to your workspace directory
+including the base name (including extension) of the crate root. This flag is not applied to the exec
+configuration (proc-macros, cargo_build_script, etc). Multiple uses are accumulated.</p>
 <p><a id="pipelined_compilation"></a></p>
 <h2 id="pipelined_compilation"><a class="header" href="#pipelined_compilation">pipelined_compilation</a></h2>
 <pre>
@@ -487,13 +495,17 @@ is available.</li>
 <li><code>mir</code></li>
 <li><code>normal</code></li>
 </ul>
-<p><a id="use_real_import_macro"></a></p>
-<h2 id="use_real_import_macro"><a class="header" href="#use_real_import_macro">use_real_import_macro</a></h2>
+<p><a id="zself_profile_events"></a></p>
+<h2 id="zself_profile_events"><a class="header" href="#zself_profile_events">zself_profile_events</a></h2>
 <pre>
---@rules_rust//rust/settings:use_real_import_macro
+--@rules_rust//rust/settings:zself_profile_events
 </pre>
-<p>A flag to control whether rust_library and rust_binary targets should     implicitly depend on the <em>real</em> import macro, or on a no-op target.</p>
-
+<p>Passes -Zself-profile and -Zself-profile-events flags to rustc, requires a nightly toolchain.</p>
+<p><strong>PARAMETERS</strong></p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Name</th><th style="text-align: left">Description</th><th style="text-align: left">Options</th></tr></thead><tbody>
+<tr><td style="text-align: left"><a id="zself_profile_events-name"></a>name</td><td style="text-align: left"><p align="center"> - </p></td><td style="text-align: left"><code>"zself_profile_events"</code></td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
